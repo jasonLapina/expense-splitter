@@ -1,0 +1,24 @@
+/* Custom styles for the expense splitter app */
+
+/* Add some spacing to the bottom of the page for better scrolling experience */
+#root {
+  padding-bottom: 2rem;
+}
+
+/* Custom animation for new expenses */
+@keyframes highlight {
+  0% {
+    background-color: rgba(25, 118, 210, 0.1);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .MuiContainer-root {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
