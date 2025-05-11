@@ -11,6 +11,7 @@ import {
   MenuItem,
   Paper,
   Select,
+  SelectChangeEvent,
   Slider,
   TextField,
   Typography,
@@ -92,7 +93,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
     }
   };
 
-  const handlePaidByChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+  const handlePaidByChange = (e: SelectChangeEvent) => {
     const value = e.target.value as Person;
     setExpense((prev) => ({ ...prev, paidBy: value }));
   };
