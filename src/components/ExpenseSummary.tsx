@@ -1,14 +1,14 @@
-import React from 'react';
-import { 
-  Box, 
-  Card, 
-  CardContent, 
-  Divider, 
-  Grid, 
-  Paper, 
-  Typography 
-} from '@mui/material';
-import { ExpenseSummary as ExpenseSummaryType } from '../types';
+import React from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
+import { ExpenseSummary as ExpenseSummaryType } from "../types";
 
 interface ExpenseSummaryProps {
   summary: ExpenseSummaryType;
@@ -17,11 +17,11 @@ interface ExpenseSummaryProps {
 const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({ summary }) => {
   // Format currency for display
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(amount);
   };
 
@@ -41,9 +41,9 @@ const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({ summary }) => {
       <Typography variant="h5" gutterBottom>
         Expense Summary
       </Typography>
-      
+
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Card variant="outlined">
             <CardContent>
               <Typography variant="h6" color="primary" gutterBottom>
@@ -55,54 +55,60 @@ const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({ summary }) => {
             </CardContent>
           </Card>
         </Grid>
-        
+
         <Grid item xs={12} md={8}>
           <Card variant="outlined">
             <CardContent>
               <Typography variant="h6" color="primary" gutterBottom>
                 Payment Breakdown
               </Typography>
-              
+
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Typography variant="subtitle1">I paid:</Typography>
-                  <Typography variant="h6">{formatCurrency(summary.paidByMe)}</Typography>
+                  <Typography variant="h6">
+                    {formatCurrency(summary.paidByMe)}
+                  </Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="subtitle1">Wife paid:</Typography>
-                  <Typography variant="h6">{formatCurrency(summary.paidByWife)}</Typography>
+                  <Typography variant="h6">
+                    {formatCurrency(summary.paidByWife)}
+                  </Typography>
                 </Grid>
               </Grid>
-              
+
               <Divider sx={{ my: 2 }} />
-              
+
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Typography variant="subtitle1">My share:</Typography>
-                  <Typography variant="h6">{formatCurrency(summary.myShare)}</Typography>
+                  <Typography variant="h6">
+                    {formatCurrency(summary.myShare)}
+                  </Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="subtitle1">Wife's share:</Typography>
-                  <Typography variant="h6">{formatCurrency(summary.wifeShare)}</Typography>
+                  <Typography variant="h6">
+                    {formatCurrency(summary.wifeShare)}
+                  </Typography>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </Grid>
-        
+
         <Grid item xs={12}>
-          <Box 
-            sx={{ 
-              p: 2, 
-              bgcolor: 'primary.main', 
-              color: 'primary.contrastText',
+          <Box
+            sx={{
+              p: 2,
+              bgcolor: "primary.main",
+              color: "primary.contrastText",
               borderRadius: 1,
-              textAlign: 'center'
+              textAlign: "center",
             }}
           >
-            <Typography variant="h5">
-              {getBalanceText()}
-            </Typography>
+            <Typography variant="h5">{getBalanceText()}</Typography>
           </Box>
         </Grid>
       </Grid>

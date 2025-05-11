@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Button, 
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
-  Grid, 
+  Grid,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -13,13 +13,13 @@ import {
   Select,
   Slider,
   TextField,
-  Typography
-} from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { v4 as uuidv4 } from 'uuid';
-import { Expense, Person } from '../types';
+  Typography,
+} from "@mui/material";
+import DatePicker from "@mui/lab/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV2";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { v4 as uuidv4 } from "uuid";
+import { Expense, Person } from "../types";
 
 interface ExpenseFormProps {
   onAddExpense: (expense: Expense) => void;
@@ -28,19 +28,19 @@ interface ExpenseFormProps {
 }
 
 const defaultExpense: Expense = {
-  id: '',
+  id: "",
   date: new Date(),
-  description: '',
+  description: "",
   amount: 0,
-  paidBy: 'Me',
+  paidBy: "Me",
   customSplit: false,
-  splitRatio: 50
+  splitRatio: 50,
 };
 
-const ExpenseForm: React.FC<ExpenseFormProps> = ({ 
-  onAddExpense, 
-  expenseToEdit, 
-  onCancelEdit 
+const ExpenseForm: React.FC<ExpenseFormProps> = ({
+  onAddExpense,
+  expenseToEdit,
+  onCancelEdit,
 }) => {
   const [expense, setExpense] = useState<Expense>(defaultExpense);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -54,94 +54,99 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
     }
   }, [expenseToEdit]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    
+
     // Clear error when field is edited
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
-    
-    setExpense(prev => ({ ...prev, [name]: value }));
+
+    setExpense((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const numValue = parseFloat(value);
-    
+
     // Clear error when field is edited
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
-    
+
     if (!isNaN(numValue)) {
-      setExpense(prev => ({ ...prev, [name]: numValue }));
+      setExpense((prev) => ({ ...prev, [name]: numValue }));
     }
   };
 
   const handleDateChange = (date: Date | null) => {
     if (date) {
-      setExpense(prev => ({ ...prev, date }));
-      
+      setExpense((prev) => ({ ...prev, date }));
+
       // Clear error when field is edited
       if (errors.date) {
-        setErrors(prev => ({ ...prev, date: '' }));
+        setErrors((prev) => ({ ...prev, date: "" }));
       }
     }
   };
 
   const handlePaidByChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const value = e.target.value as Person;
-    setExpense(prev => ({ ...prev, paidBy: value }));
+    setExpense((prev) => ({ ...prev, paidBy: value }));
   };
 
   const handleCustomSplitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
-    setExpense(prev => ({ 
-      ...prev, 
+    setExpense((prev) => ({
+      ...prev,
       customSplit: checked,
       // Set default splitRatio to 50% if enabling custom split
-      splitRatio: checked ? (prev.splitRatio || 50) : undefined
+      splitRatio: checked ? prev.splitRatio || 50 : undefined,
     }));
   };
 
-  const handleSplitRatioChange = (_event: Event, newValue: number | number[]) => {
-    setExpense(prev => ({ ...prev, splitRatio: newValue as number }));
+  const handleSplitRatioChange = (
+    _event: Event,
+    newValue: number | number[],
+  ) => {
+    setExpense((prev) => ({ ...prev, splitRatio: newValue as number }));
   };
 
   const validateForm = (): boolean => {
     const newErrors: { [key: string]: string } = {};
-    
+
     if (!expense.description.trim()) {
-      newErrors.description = 'Description is required';
+      newErrors.description = "Description is required";
     }
-    
+
     if (expense.amount <= 0) {
-      newErrors.amount = 'Amount must be greater than 0';
+      newErrors.amount = "Amount must be greater than 0";
     }
-    
+
     if (!expense.date) {
-      newErrors.date = 'Date is required';
+      newErrors.date = "Date is required";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     const submittedExpense: Expense = {
       ...expense,
-      id: expense.id || uuidv4() // Generate new ID if it's a new expense
+      id: expense.id || uuidv4(), // Generate new ID if it's a new expense
     };
-    
+
     onAddExpense(submittedExpense);
-    
+
     // Reset form if it's not an edit
     if (!expenseToEdit) {
       setExpense(defaultExpense);
@@ -153,9 +158,9 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
   return (
     <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
       <Typography variant="h6" gutterBottom>
-        {expenseToEdit ? 'Edit Expense' : 'Add New Expense'}
+        {expenseToEdit ? "Edit Expense" : "Add New Expense"}
       </Typography>
-      
+
       <Box component="form" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
@@ -168,13 +173,13 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
                   textField: {
                     fullWidth: true,
                     error: !!errors.date,
-                    helperText: errors.date
-                  }
+                    helperText: errors.date,
+                  },
                 }}
               />
             </LocalizationProvider>
           </Grid>
-          
+
           <Grid item xs={12} sm={6} md={3}>
             <TextField
               fullWidth
@@ -184,13 +189,15 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
               value={expense.amount}
               onChange={handleNumberChange}
               InputProps={{
-                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                startAdornment: (
+                  <InputAdornment position="start">$</InputAdornment>
+                ),
               }}
               error={!!errors.amount}
               helperText={errors.amount}
             />
           </Grid>
-          
+
           <Grid item xs={12} sm={6} md={3}>
             <FormControl fullWidth>
               <InputLabel id="paid-by-label">Paid By</InputLabel>
@@ -206,7 +213,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
               </Select>
             </FormControl>
           </Grid>
-          
+
           <Grid item xs={12} sm={6} md={3}>
             <FormControlLabel
               control={
@@ -219,7 +226,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
               label="Custom Split"
             />
           </Grid>
-          
+
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -231,11 +238,12 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
               helperText={errors.description}
             />
           </Grid>
-          
+
           {expense.customSplit && (
             <Grid item xs={12}>
               <Typography id="split-ratio-slider" gutterBottom>
-                Split Ratio (My Share: {expense.splitRatio}%, Wife's Share: {100 - (expense.splitRatio || 0)}%)
+                Split Ratio (My Share: {expense.splitRatio}%, Wife's Share:{" "}
+                {100 - (expense.splitRatio || 0)}%)
               </Typography>
               <Slider
                 value={expense.splitRatio || 50}
@@ -249,16 +257,16 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
               />
             </Grid>
           )}
-          
+
           <Grid item xs={12}>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
               {expenseToEdit && (
                 <Button variant="outlined" onClick={onCancelEdit}>
                   Cancel
                 </Button>
               )}
               <Button type="submit" variant="contained" color="primary">
-                {expenseToEdit ? 'Update' : 'Add'} Expense
+                {expenseToEdit ? "Update" : "Add"} Expense
               </Button>
             </Box>
           </Grid>

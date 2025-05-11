@@ -1,30 +1,31 @@
-import { useState, useEffect } from 'react';
-import { 
-  Container, 
-  CssBaseline, 
-  ThemeProvider, 
-  createTheme, 
-  Typography, 
-  Box,
+import { useState } from "react";
+import {
   AppBar,
+  Box,
+  Container,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
   Toolbar,
-  useMediaQuery
-} from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { ExpenseForm, ExpenseList, ExpenseSummary } from './components';
-import { Expense } from './types';
-import { mockExpenses, calculateExpenseSummary } from './data/mockData';
-import './App.css';
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV2";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+
+import { ExpenseForm, ExpenseList, ExpenseSummary } from "./components";
+import { Expense } from "./types";
+import { calculateExpenseSummary, mockExpenses } from "./data/mockData";
+import "./App.css";
 
 // Create a theme instance
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: "#1976d2",
     },
     secondary: {
-      main: '#dc004e',
+      main: "#dc004e",
     },
   },
 });
@@ -32,7 +33,7 @@ const theme = createTheme({
 function App() {
   const [expenses, setExpenses] = useState<Expense[]>(mockExpenses);
   const [expenseToEdit, setExpenseToEdit] = useState<Expense | null>(null);
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   // Calculate summary whenever expenses change
   const summary = calculateExpenseSummary(expenses);
@@ -41,7 +42,7 @@ function App() {
   const handleAddExpense = (expense: Expense) => {
     if (expenseToEdit) {
       // Update existing expense
-      setExpenses(expenses.map(e => e.id === expense.id ? expense : e));
+      setExpenses(expenses.map((e) => (e.id === expense.id ? expense : e)));
     } else {
       // Add new expense
       setExpenses([...expenses, expense]);
@@ -52,12 +53,12 @@ function App() {
   const handleEditExpense = (expense: Expense) => {
     setExpenseToEdit(expense);
     // Scroll to the form
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Handle deleting an expense
   const handleDeleteExpense = (id: string) => {
-    setExpenses(expenses.filter(expense => expense.id !== id));
+    setExpenses(expenses.filter((expense) => expense.id !== id));
   };
 
   // Handle canceling an edit
@@ -78,13 +79,18 @@ function App() {
         </AppBar>
         <Container maxWidth="lg">
           <Box sx={{ my: 4 }}>
-            <Typography variant="h4" component="h1" gutterBottom align={isSmallScreen ? 'center' : 'left'}>
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              align={isSmallScreen ? "center" : "left"}
+            >
               Track and Split Expenses
             </Typography>
 
             {/* Expense Form */}
-            <ExpenseForm 
-              onAddExpense={handleAddExpense} 
+            <ExpenseForm
+              onAddExpense={handleAddExpense}
               expenseToEdit={expenseToEdit}
               onCancelEdit={handleCancelEdit}
             />
@@ -96,8 +102,8 @@ function App() {
             <Typography variant="h5" gutterBottom>
               Expense History
             </Typography>
-            <ExpenseList 
-              expenses={expenses} 
+            <ExpenseList
+              expenses={expenses}
               onEditExpense={handleEditExpense}
               onDeleteExpense={handleDeleteExpense}
             />
@@ -108,4 +114,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
