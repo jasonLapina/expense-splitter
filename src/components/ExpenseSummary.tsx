@@ -56,7 +56,7 @@ const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({ summary }) => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Card variant="outlined">
             <CardContent>
               <Typography variant="h6" color="primary" gutterBottom>
@@ -64,13 +64,13 @@ const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({ summary }) => {
               </Typography>
 
               <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid size={{ xs: 6 }}>
                   <Typography variant="subtitle1">I paid:</Typography>
                   <Typography variant="h6">
                     {formatCurrency(summary.paidByMe)}
                   </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid size={{ xs: 6 }}>
                   <Typography variant="subtitle1">Wife paid:</Typography>
                   <Typography variant="h6">
                     {formatCurrency(summary.paidByWife)}
@@ -81,13 +81,13 @@ const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({ summary }) => {
               <Divider sx={{ my: 2 }} />
 
               <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid size={{ xs: 6 }}>
                   <Typography variant="subtitle1">My share:</Typography>
                   <Typography variant="h6">
                     {formatCurrency(summary.myShare)}
                   </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid size={{ xs: 6 }}>
                   <Typography variant="subtitle1">Wife's share:</Typography>
                   <Typography variant="h6">
                     {formatCurrency(summary.wifeShare)}
@@ -98,7 +98,7 @@ const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({ summary }) => {
           </Card>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Box
             sx={{
               p: 2,

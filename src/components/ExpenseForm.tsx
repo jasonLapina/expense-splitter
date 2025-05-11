@@ -163,7 +163,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
 
       <Box component="form" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Date"
@@ -180,7 +180,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
             </LocalizationProvider>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <TextField
               fullWidth
               label="Amount"
@@ -198,7 +198,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FormControl fullWidth>
               <InputLabel id="paid-by-label">Paid By</InputLabel>
               <Select
@@ -214,7 +214,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -227,7 +227,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
               label="Description"
@@ -240,7 +240,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
           </Grid>
 
           {expense.customSplit && (
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography id="split-ratio-slider" gutterBottom>
                 Split Ratio (My Share: {expense.splitRatio}%, Wife's Share:{" "}
                 {100 - (expense.splitRatio || 0)}%)
@@ -258,7 +258,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
             </Grid>
           )}
 
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
               {expenseToEdit && (
                 <Button variant="outlined" onClick={onCancelEdit}>
